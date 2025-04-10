@@ -40,7 +40,7 @@ const Welcome = ({ businessId }: { businessId: string }) => {
               </Button>
               
               <Button 
-                onClick={() => navigate(`/newuser?bid=${businessId}`)}
+                onClick={() => navigate(`/register?bid=${businessId}`)}
                 variant="outline" 
                 className="h-12 flex items-center gap-2 border-hauler-primary text-hauler-primary hover:bg-hauler-primary/10"
               >

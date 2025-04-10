@@ -21,7 +21,7 @@ const LoginWrapper = () => {
 };
 
 // Wrapper component for NewUser to handle business ID retrieval
-const NewUserWrapper = () => {
+const RegisterWrapper = () => {
   const [searchParams] = useSearchParams();
   const businessId = searchParams.get("bid") || "sales-demo"; // Default to sales-demo if bid is not provided
   return <NewUser businessId={businessId} />;
@@ -56,7 +56,7 @@ const App = () => (
           <Route path="/" element={<Root />} />
           <Route path="/welcome" element={<WelcomeWrapper />} />
           <Route path="/login" element={<LoginWrapper />} />
-          <Route path="/newuser" element={<NewUserWrapper />} />
+          <Route path="/register" element={<RegisterWrapper />} />
           <Route path="/access-account" element={<AccessAccountWrapper />} />
           <Route path="/portal" element={<Portal />} />
           <Route path="*" element={<NotFound />} />
