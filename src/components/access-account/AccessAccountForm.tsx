@@ -46,8 +46,9 @@ const AccessAccountForm = ({ businessId }: AccessAccountFormProps) => {
     },
   });
 
-  const demoAccount = "10001";
-  const demoInvoice = "INV10001";
+  // Updated to match the console log data
+  const demoAccount = "1001";
+  const demoInvoice = "INV-10001";
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const attemptResult = rateLimiter.attempt();
@@ -81,6 +82,7 @@ const AccessAccountForm = ({ businessId }: AccessAccountFormProps) => {
     setTimeout(() => {
       setIsSubmitting(false);
 
+      // Update the validation check to use the new demo values
       if (data.accountNumber === demoAccount && data.invoiceNumber === demoInvoice) {
         toast({
           title: "Success",
