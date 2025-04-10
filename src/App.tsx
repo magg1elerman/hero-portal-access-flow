@@ -35,7 +35,7 @@ const WelcomeWrapper = () => {
 };
 
 // Wrapper component for PayBill to handle business ID retrieval
-const PayBillWrapper = () => {
+const AccessAccountWrapper = () => {
   const [searchParams] = useSearchParams();
   const businessId = searchParams.get("bid") || "sales-demo"; // Default to sales-demo if bid is not provided
   return <PayBill businessId={businessId} />;
@@ -57,7 +57,7 @@ const App = () => (
           <Route path="/welcome" element={<WelcomeWrapper />} />
           <Route path="/login" element={<LoginWrapper />} />
           <Route path="/newuser" element={<NewUserWrapper />} />
-          <Route path="/paybill" element={<PayBillWrapper />} />
+          <Route path="/access-account" element={<AccessAccountWrapper />} />
           <Route path="/portal" element={<Portal />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

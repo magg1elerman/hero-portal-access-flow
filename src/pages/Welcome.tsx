@@ -61,7 +61,7 @@ const Welcome = ({ businessId }: { businessId: string }) => {
               </Button>
               
               <Button 
-                onClick={() => navigate(`/paybill?bid=${businessId}`)}
+                onClick={() => navigate(`/access-account?bid=${businessId}`)}
                 variant="secondary" 
                 className="h-12 flex items-center gap-2"
               >
