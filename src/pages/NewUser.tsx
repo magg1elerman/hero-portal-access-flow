@@ -76,7 +76,7 @@ const NewUser = () => {
       toast({
         title: "Warning",
         description: "You have 2 more attempts before being locked out for 24 hours.",
-        variant: "warning",
+        variant: "destructive", // Changed from "warning" to "destructive"
       });
     }
     
@@ -85,7 +85,7 @@ const NewUser = () => {
       toast({
         title: "Final Warning",
         description: "This is your last attempt before being locked out for 24 hours.",
-        variant: "warning",
+        variant: "destructive", // Changed from "warning" to "destructive"
       });
     }
 
