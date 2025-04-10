@@ -64,7 +64,7 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				"hauler": {
-					"primary": "#0B6E4F",
+					"primary": "#1E6DA8", // Changed from #0B6E4F (green) to #1E6DA8 (blue)
 					"secondary": "#475B63",
 					"accent": "#FA991C",
 					"light": "#F3F4F6",
