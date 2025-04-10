@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import HaulerHeroLogo from "@/components/HaulerHeroLogo";
 import { RateLimiter } from "@/utils/rateLimiter";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { CheckCircle, AlertCircle, Lock, Unlock, ArrowRight, KeyRound } from "lucide-react";
+import { CheckCircle, AlertCircle, Lock, Unlock, ArrowRight, KeyRound, ArrowLeft } from "lucide-react";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { 
   Dialog,
@@ -420,8 +421,12 @@ const NewUser = ({ businessId }: NewUserProps) => {
               <Unlock className="mr-2 h-4 w-4" /> Reset Rate Limiter (For Testing)
             </Button>
             
-            <Button variant="outline" className="w-full mt-2" asChild>
-              <a href={`/login?bid=${businessId}`}>Back to Login</a>
+            <Button 
+              variant="link" 
+              className="w-full mt-2 text-gray-600 hover:text-gray-900" 
+              onClick={() => navigate(`/login?bid=${businessId}`)}
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" /> Go back
             </Button>
           </CardFooter>
         </Card>
