@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ExclamationTriangleIcon } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 
 interface RateLimitMessageProps {
   isLocked: boolean;
@@ -18,7 +18,7 @@ const RateLimitMessage = ({ isLocked, attemptsRemaining = 0, resetLimiter }: Rat
       <>
         <div className="mt-4 p-3 bg-red-50 text-red-800 rounded-md text-sm">
           <div className="flex items-center">
-            <ExclamationTriangleIcon className="h-4 w-4 mr-2" />
+            <AlertTriangle className="h-4 w-4 mr-2" />
             <span>Your access has been temporarily locked due to too many failed attempts.
             Please try again after 24 hours or contact customer support.</span>
           </div>
@@ -40,7 +40,7 @@ const RateLimitMessage = ({ isLocked, attemptsRemaining = 0, resetLimiter }: Rat
   return (
     <div className="mt-4 p-3 bg-amber-50 text-amber-800 rounded-md text-sm">
       <div className="flex items-center">
-        <ExclamationTriangleIcon className="h-4 w-4 mr-2" />
+        <AlertTriangle className="h-4 w-4 mr-2" />
         <span>
           {attemptsRemaining === 1 
             ? "This is your final attempt before being locked out for 24 hours." 
