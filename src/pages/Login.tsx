@@ -101,7 +101,7 @@ const Login = ({ businessId }: { businessId: string }) => {
                   to={`/newuser?bid=${businessId}`} 
                   className="text-hauler-primary hover:underline font-medium"
                 >
-                  Create Portal Account
+                  Create One Now
                 </Link>
               </p>
             </div>
