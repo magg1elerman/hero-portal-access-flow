@@ -19,14 +19,12 @@ import {
   DialogFooter
 } from "@/components/ui/dialog";
 
-// Mock database of valid accounts for demo purposes
 const VALID_ACCOUNTS = [
   { accountNumber: "1001", invoiceNumber: "INV-10001", businessId: "sales-demo" },
   { accountNumber: "1002", invoiceNumber: "INV-10002", businessId: "sales-demo" },
   { accountNumber: "2001", invoiceNumber: "INV-20001", businessId: "other-business" },
 ];
 
-// Step type definition
 type Step = "account-details" | "verification" | "success";
 
 interface NewUserProps {
@@ -37,28 +35,24 @@ const NewUser = ({ businessId }: NewUserProps) => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const rateLimiter = new RateLimiter(5, 5 * 60 * 1000); // 5 attempts in 5 minutes
+  const rateLimiter = new RateLimiter(5, 5 * 60 * 1000);
 
-  // Form state
   const [accountNumber, setAccountNumber] = useState("");
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
 
-  // UI state
   const [currentStep, setCurrentStep] = useState<Step>("account-details");
   const [attempts, setAttempts] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
   const [resetDialogOpen, setResetDialogOpen] = useState(false);
 
   useEffect(() => {
-    // Check if this IP is already locked
     const lockStatus = rateLimiter.checkLocked();
     setIsLocked(lockStatus.locked);
     setAttempts(lockStatus.attempts);
     
-    // Debug info
     console.log("Current business ID:", businessId);
     console.log("Valid accounts:", VALID_ACCOUNTS);
   }, [businessId]);
@@ -85,7 +79,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
       return false;
     }
 
-    // Check if account is valid (in our mock database)
     const isValid = VALID_ACCOUNTS.some(
       account => 
         account.accountNumber === accountNumber && 
@@ -96,7 +89,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
     console.log("Validation result:", isValid);
 
     if (!isValid) {
-      // Increment attempt counter
       const result = rateLimiter.attempt();
       setAttempts(result.attempts);
       
@@ -110,7 +102,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
         return false;
       }
 
-      // Show warning after 3 attempts
       if (result.attempts === 3) {
         toast({
           title: "Warning",
@@ -119,7 +110,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
         });
       }
       
-      // Show warning after 4 attempts
       if (result.attempts === 4) {
         toast({
           title: "Final Warning",
@@ -152,7 +142,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
       return;
     }
 
-    // Debug verification attempt
     console.log("Verification attempt:", {
       accountNumber,
       invoiceNumber,
@@ -160,7 +149,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
     });
 
     if (validateAccountDetails()) {
-      // Go to verification step
       setCurrentStep("verification");
       
       toast({
@@ -174,11 +162,9 @@ const NewUser = ({ businessId }: NewUserProps) => {
   const handleVerifyCode = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Hard-coded verification code for demo
     const validCode = "123456";
     
     if (verificationCode === validCode) {
-      // Success - Reset the rate limiter
       rateLimiter.reset();
       
       toast({
@@ -187,15 +173,12 @@ const NewUser = ({ businessId }: NewUserProps) => {
         variant: "default",
       });
       
-      // Set success state
       setCurrentStep("success");
       
-      // Small delay for user to see the success message
       setTimeout(() => {
         navigate(`/portal?bid=${businessId}&account=${accountNumber}`);
       }, 2000);
     } else {
-      // Increment attempt counter
       const result = rateLimiter.attempt();
       setAttempts(result.attempts);
       
@@ -209,7 +192,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
         return;
       }
 
-      // Show warning after 3 attempts
       if (result.attempts === 3) {
         toast({
           title: "Warning",
@@ -218,7 +200,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
         });
       }
       
-      // Show warning after 4 attempts
       if (result.attempts === 4) {
         toast({
           title: "Final Warning",
@@ -328,8 +309,8 @@ const NewUser = ({ businessId }: NewUserProps) => {
                     className="mb-4"
                     render={({ slots }) => (
                       <InputOTPGroup>
-                        {slots.map((slot, index) => (
-                          <InputOTPSlot key={index} {...slot} index={index} />
+                        {Array.from({ length: 6 }).map((_, i) => (
+                          <InputOTPSlot key={i} index={i} />
                         ))}
                       </InputOTPGroup>
                     )}
@@ -431,7 +412,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
               <p>Account: 1002, Invoice: INV-10002</p>
             </div>
             
-            {/* Reset button for testing purposes */}
             <Button 
               variant="outline" 
               className="w-full mt-2 mb-2 border-dashed border-hauler-warning text-hauler-warning hover:bg-hauler-warning/10" 
@@ -447,7 +427,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
         </Card>
       </div>
       
-      {/* Reset confirmation dialog */}
       <Dialog open={resetDialogOpen} onOpenChange={setResetDialogOpen}>
         <DialogContent>
           <DialogHeader>
