@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import SummitLogo from "@/components/SummitLogo";
-import { ArrowLeft, Mail, Facebook, Linkedin, Github } from "lucide-react";
+import { ArrowLeft, Mail, Facebook, Linkedin, Github, Microsoft } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const Login = ({ businessId }: { businessId: string }) => {
@@ -82,33 +81,28 @@ const Login = ({ businessId }: { businessId: string }) => {
           </CardHeader>
           <CardContent>
             <div className="grid gap-6">
-              {/* Social Login Buttons */}
-              <div className="grid gap-2">
+              {/* Social Login Icons */}
+              <div className="flex justify-center gap-6 mb-4">
                 <Button 
                   type="button" 
                   variant="outline" 
-                  className="w-full flex items-center justify-center gap-2"
+                  size="icon"
+                  className="rounded-full h-12 w-12"
                   onClick={() => handleSocialLogin('Microsoft')}
                   disabled={isLoading}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 23 23">
-                    <path fill="#f3f3f3" d="M0 0h23v23H0z"/>
-                    <path fill="#f35325" d="M1 1h10v10H1z"/>
-                    <path fill="#81bc06" d="M12 1h10v10H12z"/>
-                    <path fill="#05a6f0" d="M1 12h10v10H1z"/>
-                    <path fill="#ffba08" d="M12 12h10v10H12z"/>
-                  </svg>
-                  Continue with Microsoft
+                  <Microsoft className="h-6 w-6" />
                 </Button>
                 
                 <Button 
                   type="button" 
                   variant="outline" 
-                  className="w-full flex items-center justify-center gap-2"
+                  size="icon"
+                  className="rounded-full h-12 w-12"
                   onClick={() => handleSocialLogin('Google')}
                   disabled={isLoading}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 186.69 190.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 186.69 190.5">
                     <g transform="translate(1184.583 765.171)">
                       <path clip-path="none" mask="none" d="M-1089.333-687.239v36.888h51.262c-2.251 11.863-9.006 21.908-19.137 28.662l30.913 23.986c18.011-16.625 28.402-41.044 28.402-70.052 0-6.754-.606-13.249-1.732-19.483z" fill="#4285f4"/>
                       <path clip-path="none" mask="none" d="M-1142.714-651.791l-6.972 5.337-24.679 19.223h0c15.673 31.086 47.796 52.561 85.03 52.561 25.717 0 47.278-8.486 63.038-23.033l-30.913-23.986c-8.486 5.715-19.31 9.179-32.125 9.179-24.765 0-45.806-16.712-53.34-39.226z" fill="#34a853"/>
@@ -116,21 +110,17 @@ const Login = ({ businessId }: { businessId: string }) => {
                       <path d="M-1089.333-727.244c14.028 0 26.497 4.849 36.455 14.201l27.276-27.276c-16.539-15.413-38.013-24.852-63.731-24.852-37.234 0-69.359 21.388-85.032 52.561l31.692 24.592c7.533-22.514 28.575-39.226 53.34-39.226z" fill="#ea4335" clip-path="none" mask="none"/>
                     </g>
                   </svg>
-                  Continue with Google
                 </Button>
                 
                 <Button 
                   type="button" 
                   variant="outline" 
-                  className="w-full flex items-center justify-center gap-2"
+                  size="icon"
+                  className="rounded-full h-12 w-12"
                   onClick={() => handleSocialLogin('Facebook')}
                   disabled={isLoading}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 1024 1024">
-                    <path d="M1024,512C1024,229.23,794.77,0,512,0S0,229.23,0,512c0,255.55,187.23,467.37,432,505.78V660H302V512H432V399.2C432,270.88,508.44,200,625.39,200c56,0,114.61,10,114.61,10V336H675.44c-63.6,0-83.44,39.47-83.44,80v96H734L711.3,660H592v357.78C836.77,979.37,1024,767.55,1024,512Z" fill="#1877f2"/>
-                    <path d="M711.3,660,734,512H592V416c0-40.54,19.84-80,83.44-80h55.56V210s-58.64-10-114.61-10C508.44,200,432,270.88,432,399.2V512H302V660H432v357.78a517.58,517.58,0,0,0,160,0V660Z" fill="#fff"/>
-                  </svg>
-                  Continue with Facebook
+                  <Facebook className="h-6 w-6" />
                 </Button>
               </div>
               
