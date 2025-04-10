@@ -8,7 +8,7 @@ interface SummitLogoProps {
 const SummitLogo: React.FC<SummitLogoProps> = ({ className }) => {
   return (
     <img 
-      src="/lovable-uploads/a9603f01-33ea-4185-8b33-9c3ae3b48525.png" 
+      src="/lovable-uploads/c0830cad-fa2d-488b-a6ce-4a1ecba96c98.png" 
       alt="Summit Waste Services Logo" 
       className={className} 
     />
