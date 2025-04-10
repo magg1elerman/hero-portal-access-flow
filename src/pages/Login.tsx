@@ -23,6 +23,23 @@ const Login = ({ businessId }: { businessId: string }) => {
     return emailRegex.test(email);
   };
 
+  const handleLogin = (provider?: string) => {
+    // Set loading state
+    setIsLoading(true);
+    
+    // Show toast with appropriate message
+    toast({
+      title: provider ? `${provider} login successful` : "Login successful",
+      description: "Redirecting to portal...",
+    });
+    
+    // Short timeout for user experience, then redirect
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate(`/portal?bid=${businessId}`);
+    }, 500);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -44,37 +61,8 @@ const Login = ({ businessId }: { businessId: string }) => {
       return;
     }
     
-    setIsLoading(true);
-    
-    // Simulate API request - but now will always succeed with valid email
-    setTimeout(() => {
-      setIsLoading(false);
-      
-      toast({
-        title: "Login successful",
-        description: "Redirecting to portal...",
-      });
-      
-      // Redirect to portal with business ID
-      navigate(`/portal?bid=${businessId}`);
-    }, 800);
-  };
-
-  const handleSocialLogin = (provider: string) => {
-    setIsLoading(true);
-    
-    // Simulate social login API request - will always succeed
-    setTimeout(() => {
-      setIsLoading(false);
-      
-      toast({
-        title: `${provider} login successful`,
-        description: "Redirecting to portal...",
-      });
-      
-      // Redirect to portal with business ID
-      navigate(`/portal?bid=${businessId}`);
-    }, 800);
+    // Use the common login handler
+    handleLogin();
   };
 
   return (
@@ -103,7 +91,7 @@ const Login = ({ businessId }: { businessId: string }) => {
                   variant="outline" 
                   size="icon"
                   className="rounded-full h-12 w-12"
-                  onClick={() => handleSocialLogin('Microsoft')}
+                  onClick={() => handleLogin('Microsoft')}
                   disabled={isLoading}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 23 23">
@@ -120,7 +108,7 @@ const Login = ({ businessId }: { businessId: string }) => {
                   variant="outline" 
                   size="icon"
                   className="rounded-full h-12 w-12"
-                  onClick={() => handleSocialLogin('Google')}
+                  onClick={() => handleLogin('Google')}
                   disabled={isLoading}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 186.69 190.5">
@@ -138,7 +126,7 @@ const Login = ({ businessId }: { businessId: string }) => {
                   variant="outline" 
                   size="icon"
                   className="rounded-full h-12 w-12"
-                  onClick={() => handleSocialLogin('Facebook')}
+                  onClick={() => handleLogin('Facebook')}
                   disabled={isLoading}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#1877F2">
