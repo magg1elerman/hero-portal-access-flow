@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import HaulerHeroLogo from "@/components/HaulerHeroLogo";
+import SummitLogo from "@/components/SummitLogo";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { InfoIcon, CreditCard, UserPlus, Mail } from "lucide-react";
 
@@ -14,12 +14,12 @@ const Welcome = ({ businessId }: { businessId: string }) => {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
-          <HaulerHeroLogo className="w-48 h-auto mb-4" />
+          <SummitLogo className="w-64 h-auto mb-4" />
           <h1 className="text-2xl sm:text-3xl font-bold text-hauler-dark text-center">
             Customer Portal
           </h1>
           <p className="text-hauler-secondary mt-2 text-center">
-            Welcome to the Hauler Hero customer portal for {businessId}
+            Welcome to the Summit Waste Services customer portal for {businessId}
           </p>
         </div>
 

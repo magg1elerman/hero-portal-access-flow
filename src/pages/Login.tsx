@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import HaulerHeroLogo from "@/components/HaulerHeroLogo";
+import SummitLogo from "@/components/SummitLogo";
 import { ArrowLeft, Mail } from "lucide-react";
 
 const Login = ({ businessId }: { businessId: string }) => {
@@ -49,7 +49,7 @@ const Login = ({ businessId }: { businessId: string }) => {
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-50">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <HaulerHeroLogo className="mx-auto mb-4 h-16" />
+          <SummitLogo className="mx-auto mb-4 h-16" />
           <h2 className="text-2xl font-semibold text-hauler-dark">Customer Portal</h2>
           <p className="text-hauler-secondary mt-2">Business ID: {businessId}</p>
         </div>
