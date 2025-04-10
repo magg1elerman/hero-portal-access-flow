@@ -34,7 +34,11 @@ const NewUser = () => {
     const lockStatus = rateLimiter.checkLocked();
     setIsLocked(lockStatus.locked);
     setAttempts(lockStatus.attempts);
-  }, []);
+    
+    // Debug info
+    console.log("Current business ID:", businessId);
+    console.log("Valid accounts:", VALID_ACCOUNTS);
+  }, [businessId]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,6 +60,13 @@ const NewUser = () => {
       });
       return;
     }
+
+    // Debug verification attempt
+    console.log("Verification attempt:", {
+      accountNumber,
+      invoiceNumber,
+      businessId,
+    });
 
     // Increment attempt counter
     const result = rateLimiter.attempt();
@@ -96,6 +107,8 @@ const NewUser = () => {
         account.invoiceNumber === invoiceNumber && 
         account.businessId === businessId
     );
+    
+    console.log("Validation result:", isValid);
 
     if (isValid) {
       // Reset the rate limiter on success
@@ -134,7 +147,7 @@ const NewUser = () => {
         <div className="mb-8 text-center">
           <HaulerHeroLogo className="mx-auto mb-4 h-16" />
           <h2 className="text-2xl font-semibold text-hauler-dark">Create Portal Account</h2>
-          <p className="text-hauler-secondary mt-2">Business ID: {businessId}</p>
+          <p className="text-hauler-secondary mt-2">Business ID: {businessId || "No business ID provided"}</p>
         </div>
 
         <Card className="w-full">
@@ -207,6 +220,12 @@ const NewUser = () => {
                 Failed attempts: {attempts}/5
               </div>
             )}
+            <div className="w-full mt-2 bg-gray-100 p-3 rounded-md text-sm mb-3">
+              <p className="font-medium mb-1">Demo Accounts:</p>
+              <p>Business ID: sales-demo</p>
+              <p>Account: 1001, Invoice: INV-10001</p>
+              <p>Account: 1002, Invoice: INV-10002</p>
+            </div>
             <Button variant="outline" className="w-full mt-2" asChild>
               <a href={`/login?bid=${businessId}`}>Back to Login</a>
             </Button>
