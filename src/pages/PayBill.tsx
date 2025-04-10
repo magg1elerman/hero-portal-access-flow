@@ -260,7 +260,7 @@ const PayBill = ({ businessId }: { businessId: string }) => {
                 className="text-hauler-secondary"
               >
                 <ArrowLeft className="mr-1 h-4 w-4" />
-                Back to Welcome
+                Go Back
               </Button>
             </div>
           </CardFooter>
