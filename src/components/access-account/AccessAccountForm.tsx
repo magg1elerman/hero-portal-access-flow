@@ -32,6 +32,7 @@ const AccessAccountForm = () => {
   
   const limitStatus = rateLimiter.checkLocked();
   const [isLocked, setIsLocked] = useState(limitStatus.locked);
+  const [attempts, setAttempts] = useState(limitStatus.attempts || 0);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,11 +44,17 @@ const AccessAccountForm = () => {
   });
 
   // Updated to match the console log data
-  const demoAccount = "1001";
-  const demoInvoice = "INV-10001";
+  const validAccounts = [
+    { accountNumber: "1001", invoiceNumber: "INV-10001" },
+    { accountNumber: "1002", invoiceNumber: "INV-10002" },
+    { accountNumber: "2001", invoiceNumber: "INV-20001" }
+  ];
+
+  console.log("Valid accounts:", validAccounts);
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const attemptResult = rateLimiter.attempt();
+    setAttempts(attemptResult.attempts);
     
     if (attemptResult.locked) {
       setIsLocked(true);
@@ -75,11 +82,24 @@ const AccessAccountForm = () => {
       });
     }
 
+    // Log verification attempt for debugging
+    console.log("Verification attempt:", {
+      accountNumber: data.accountNumber,
+      invoiceNumber: data.invoiceNumber
+    });
+
     setTimeout(() => {
       setIsSubmitting(false);
 
-      // Update the validation check to use the new demo values
-      if (data.accountNumber === demoAccount && data.invoiceNumber === demoInvoice) {
+      // Check if credentials match any valid account
+      const isValid = validAccounts.some(
+        account => account.accountNumber === data.accountNumber && 
+                  account.invoiceNumber === data.invoiceNumber
+      );
+      
+      console.log("Validation result:", isValid);
+
+      if (isValid) {
         toast({
           title: "Success",
           description: "Redirecting to payment screen",
@@ -88,6 +108,11 @@ const AccessAccountForm = () => {
         const emailParam = data.email ? `&email=${encodeURIComponent(data.email)}` : '';
         
         navigate(`/portal?account=${data.accountNumber}${emailParam}`);
+
+        // Reset rate limiter on successful login
+        rateLimiter.reset();
+        setIsLocked(false);
+        setAttempts(0);
       } else {
         toast({
           title: "Invalid credentials",
@@ -101,6 +126,7 @@ const AccessAccountForm = () => {
   const resetLimiter = () => {
     rateLimiter.reset();
     setIsLocked(false);
+    setAttempts(0);
     toast({
       title: "Rate limiter reset",
       description: "For demo purposes only",
@@ -114,12 +140,12 @@ const AccessAccountForm = () => {
           <AccountNumberField 
             control={form.control} 
             disabled={isLocked || isSubmitting}
-            demoValue={demoAccount}
+            demoValue="1001"
           />
           <InvoiceNumberField 
             control={form.control} 
             disabled={isLocked || isSubmitting}
-            demoValue={demoInvoice}
+            demoValue="INV-10001"
           />
           <EmailField 
             control={form.control} 
@@ -137,6 +163,7 @@ const AccessAccountForm = () => {
       
       <RateLimitMessage 
         isLocked={isLocked}
+        attemptsRemaining={isLocked ? 0 : 5 - attempts}
         resetLimiter={resetLimiter}
       />
     </div>
