@@ -290,17 +290,19 @@ const NewUser = ({ businessId }: NewUserProps) => {
                   <InputOTP 
                     maxLength={6} 
                     value={verificationCode} 
-                    onChange={setVerificationCode}
+                    onChange={(value) => setVerificationCode(value)}
                     disabled={isLocked}
                     className="mb-4"
-                    render={({ slots }) => (
-                      <InputOTPGroup>
-                        {Array.from({ length: 6 }).map((_, i) => (
-                          <InputOTPSlot key={i} index={i} />
-                        ))}
-                      </InputOTPGroup>
-                    )}
-                  />
+                  >
+                    <InputOTPGroup>
+                      <InputOTPSlot index={0} />
+                      <InputOTPSlot index={1} />
+                      <InputOTPSlot index={2} />
+                      <InputOTPSlot index={3} />
+                      <InputOTPSlot index={4} />
+                      <InputOTPSlot index={5} />
+                    </InputOTPGroup>
+                  </InputOTP>
                 </div>
                 <p className="text-xs text-muted-foreground text-center mt-2">
                   For demo purposes, the code is: 123456
