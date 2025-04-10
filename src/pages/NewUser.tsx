@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import SummitLogo from "@/components/SummitLogo";
 import { RateLimiter } from "@/utils/rateLimiter";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import RateLimitMessage from "@/components/access-account/RateLimitMessage";
 import { 
   AlertCircle, 
   Lock, 
@@ -21,7 +20,6 @@ import {
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
-// Custom Google icon
 const GoogleIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path d="M21.8055 10.0415H21V10H12V14H17.6515C16.827 16.3285 14.6115 18 12 18C8.6865 18 6 15.3135 6 12C6 8.6865 8.6865 6 12 6C13.5295 6 14.921 6.577 15.9805 7.5195L18.809 4.691C17.023 3.0265 14.634 2 12 2C6.4775 2 2 6.4775 2 12C2 17.5225 6.4775 22 12 22C17.5225 22 22 17.5225 22 12C22 11.3295 21.931 10.675 21.8055 10.0415Z" fill="#FFC107"/>
@@ -31,14 +29,12 @@ const GoogleIcon = () => (
   </svg>
 );
 
-// Custom Facebook icon with blue color
 const FacebookIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#1877F2">
     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="#1877F2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
-// Custom Microsoft icon since it's not available in lucide-react
 const MicrosoftIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 23 23">
     <path fill="#f3f3f3" d="M0 0h23v23H0z"/>
@@ -62,11 +58,9 @@ const NewUser = () => {
   const { toast } = useToast();
   const rateLimiter = new RateLimiter(5, 5 * 60 * 1000);
 
-  // Account verification state
   const [accountNumber, setAccountNumber] = useState("");
   const [invoiceNumber, setInvoiceNumber] = useState("");
   
-  // Create login state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -74,12 +68,13 @@ const NewUser = () => {
   const [currentStep, setCurrentStep] = useState<Step>("account-verification");
   const [attempts, setAttempts] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
-  const [resetDialogOpen, setResetDialogOpen] = useState(false);
+  const [attemptsRemaining, setAttemptsRemaining] = useState(5);
 
   useEffect(() => {
     const lockStatus = rateLimiter.checkLocked();
     setIsLocked(lockStatus.locked);
     setAttempts(lockStatus.attempts);
+    setAttemptsRemaining(5 - lockStatus.attempts);
     
     console.log("Valid accounts:", VALID_ACCOUNTS);
   }, []);
@@ -88,7 +83,7 @@ const NewUser = () => {
     rateLimiter.reset();
     setIsLocked(false);
     setAttempts(0);
-    setResetDialogOpen(false);
+    setAttemptsRemaining(5);
     toast({
       title: "Rate Limiter Reset",
       description: "You are now unlocked and can continue testing.",
@@ -117,6 +112,7 @@ const NewUser = () => {
     if (!isValid) {
       const result = rateLimiter.attempt();
       setAttempts(result.attempts);
+      setAttemptsRemaining(5 - result.attempts);
       
       if (result.locked) {
         setIsLocked(true);
@@ -126,22 +122,6 @@ const NewUser = () => {
           variant: "destructive",
         });
         return false;
-      }
-
-      if (result.attempts === 3) {
-        toast({
-          title: "Warning",
-          description: "You have 2 more attempts before being locked out for 24 hours.",
-          variant: "destructive",
-        });
-      }
-      
-      if (result.attempts === 4) {
-        toast({
-          title: "Final Warning",
-          description: "This is your last attempt before being locked out for 24 hours.",
-          variant: "destructive",
-        });
       }
 
       toast({
@@ -269,6 +249,12 @@ const NewUser = () => {
               />
             </div>
           </div>
+          
+          <RateLimitMessage 
+            isLocked={isLocked} 
+            attemptsRemaining={attemptsRemaining} 
+            resetLimiter={handleReset} 
+          />
           
           <Button 
             type="submit" 
@@ -409,31 +395,6 @@ const NewUser = () => {
             {currentStep === "account-verification" ? renderAccountVerificationStep() : renderCreateLoginStep()}
           </CardContent>
           <CardFooter className="flex flex-col">
-            {isLocked && (
-              <Alert variant="destructive" className="mb-4">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Access Locked</AlertTitle>
-                <AlertDescription>
-                  Your access is locked due to too many failed attempts.
-                  Please try again after 24 hours.
-                </AlertDescription>
-              </Alert>
-            )}
-            
-            {attempts > 0 && !isLocked && (
-              <div className="text-sm text-hauler-warning mb-2 text-center">
-                Failed attempts: {attempts}/5
-              </div>
-            )}
-            
-            <Button 
-              variant="outline" 
-              className="w-full mt-2 mb-2 border-dashed border-hauler-warning text-hauler-warning hover:bg-hauler-warning/10" 
-              onClick={handleReset}
-            >
-              <Unlock className="mr-2 h-4 w-4" /> Reset Rate Limiter (For Testing)
-            </Button>
-            
             <Button 
               variant="link" 
               className="w-full mt-2 text-gray-600 hover:text-gray-900" 
