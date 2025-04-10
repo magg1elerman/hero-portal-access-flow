@@ -6,13 +6,13 @@ import { ArrowLeft, KeyRound } from "lucide-react";
 import PageHeader from "@/components/access-account/PageHeader";
 import AccessAccountForm from "@/components/access-account/AccessAccountForm";
 
-const PayBill = ({ businessId }: { businessId: string }) => {
+const PayBill = () => {
   const navigate = useNavigate();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-50">
       <div className="w-full max-w-md">
-        <PageHeader businessId={businessId} />
+        <PageHeader />
 
         <Card className="w-full">
           <CardHeader>
@@ -25,13 +25,13 @@ const PayBill = ({ businessId }: { businessId: string }) => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <AccessAccountForm businessId={businessId} />
+            <AccessAccountForm />
           </CardContent>
           <CardFooter className="flex flex-col">
             <div className="w-full text-center mt-4">
               <Button 
                 variant="link" 
-                onClick={() => navigate(`/welcome?bid=${businessId}`)}
+                onClick={() => navigate(`/welcome`)}
                 className="text-hauler-secondary"
               >
                 <ArrowLeft className="mr-1 h-4 w-4" />
