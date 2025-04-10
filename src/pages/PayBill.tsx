@@ -9,7 +9,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import SummitLogo from "@/components/SummitLogo";
-import { ArrowLeft, HelpCircle, CreditCard, Mail } from "lucide-react";
+import { ArrowLeft, HelpCircle, KeyRound, Mail } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { RateLimiter } from "@/utils/rateLimiter";
 
@@ -117,7 +117,7 @@ const PayBill = ({ businessId }: { businessId: string }) => {
         <Card className="w-full">
           <CardHeader>
             <CardTitle className="flex items-center">
-              <CreditCard className="mr-2 h-5 w-5" />
+              <KeyRound className="mr-2 h-5 w-5" />
               One-Time Access
             </CardTitle>
             <CardDescription>
@@ -229,7 +229,7 @@ const PayBill = ({ businessId }: { businessId: string }) => {
                   className="w-full mt-6" 
                   disabled={isLocked || isSubmitting}
                 >
-                  {isSubmitting ? "Verifying..." : "Continue to Payment"}
+                  {isSubmitting ? "Verifying..." : "Continue to Account"}
                 </Button>
               </form>
             </Form>
