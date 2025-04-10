@@ -10,7 +10,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import SummitLogo from "@/components/SummitLogo";
-import { ArrowLeft, HelpCircle, CreditCard } from "lucide-react";
+import { ArrowLeft, HelpCircle, CreditCard, Mail } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { RateLimiter } from "@/utils/rateLimiter";
 
@@ -25,6 +25,7 @@ const formSchema = z.object({
   invoiceNumber: z.string()
     .min(6, "Invoice number must be at least 6 characters")
     .max(15, "Invoice number must be at most 15 characters"),
+  email: z.string().email("Invalid email address").optional(),
 });
 
 const PayBill = ({ businessId }: { businessId: string }) => {
@@ -42,6 +43,7 @@ const PayBill = ({ businessId }: { businessId: string }) => {
     defaultValues: {
       accountNumber: "",
       invoiceNumber: "",
+      email: "",
     },
   });
 
@@ -90,8 +92,12 @@ const PayBill = ({ businessId }: { businessId: string }) => {
           title: "Success",
           description: "Redirecting to payment screen",
         });
+        
+        // Include email if provided
+        const emailParam = data.email ? `&email=${encodeURIComponent(data.email)}` : '';
+        
         // Navigate to the payment portal
-        navigate(`/portal?bid=${businessId}&temp=true&account=${data.accountNumber}`);
+        navigate(`/portal?bid=${businessId}&temp=true&account=${data.accountNumber}${emailParam}`);
       } else {
         toast({
           title: "Invalid credentials",
@@ -125,10 +131,10 @@ const PayBill = ({ businessId }: { businessId: string }) => {
           <CardHeader>
             <CardTitle className="flex items-center">
               <CreditCard className="mr-2 h-5 w-5" />
-              One-Time Payment
+              One-Time Access
             </CardTitle>
             <CardDescription>
-              Enter your account details to make a payment without creating an account
+              Just want to make a quick payment? Enter your Account Number and Invoice Number—no email required! We'll securely connect you to your invoice for a fast, one-time payment.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -193,6 +199,39 @@ const PayBill = ({ businessId }: { businessId: string }) => {
                       </FormControl>
                       <FormDescription>
                         For demo, use: {demoInvoice}
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center">
+                        Email (Optional)
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <HelpCircle className="h-4 w-4 ml-1 text-muted-foreground" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Provide your email to receive payment confirmations</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </FormLabel>
+                      <FormControl>
+                        <Input 
+                          type="email"
+                          placeholder="your.email@example.com" 
+                          {...field} 
+                          disabled={isLocked || isSubmitting}
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        Your email is used to send payment confirmations and receipts
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
