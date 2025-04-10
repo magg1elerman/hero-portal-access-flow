@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import SummitLogo from "@/components/SummitLogo";
-import { ArrowLeft, Mail, Facebook, Linkedin, Github, Microsoft } from "lucide-react";
+import { ArrowLeft, Mail, Facebook, Linkedin, Github } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const Login = ({ businessId }: { businessId: string }) => {
@@ -91,7 +92,13 @@ const Login = ({ businessId }: { businessId: string }) => {
                   onClick={() => handleSocialLogin('Microsoft')}
                   disabled={isLoading}
                 >
-                  <Microsoft className="h-6 w-6" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 23 23">
+                    <path fill="#f3f3f3" d="M0 0h23v23H0z"/>
+                    <path fill="#f35325" d="M1 1h10v10H1z"/>
+                    <path fill="#81bc06" d="M12 1h10v10H12z"/>
+                    <path fill="#05a6f0" d="M1 12h10v10H1z"/>
+                    <path fill="#ffba08" d="M12 12h10v10H12z"/>
+                  </svg>
                 </Button>
                 
                 <Button 
