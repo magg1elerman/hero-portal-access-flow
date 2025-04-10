@@ -41,7 +41,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
   const [accountNumber, setAccountNumber] = useState("");
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
 
   const [currentStep, setCurrentStep] = useState<Step>("account-details");
@@ -259,20 +258,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
                 />
                 <p className="text-xs text-muted-foreground">
                   Provide your email to receive portal access information
-                </p>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="password">Password (Optional)</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Create a password"
-                  disabled={isLocked}
-                />
-                <p className="text-xs text-muted-foreground">
-                  Create a password for future logins
                 </p>
               </div>
               <Button 
