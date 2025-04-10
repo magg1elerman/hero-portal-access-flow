@@ -409,7 +409,7 @@ const NewUser = ({ businessId }: NewUserProps) => {
             <Button 
               variant="link" 
               className="w-full mt-2 text-gray-600 hover:text-gray-900" 
-              onClick={() => navigate(`/login?bid=${businessId}`)}
+              onClick={() => navigate(`/welcome?bid=${businessId}`)}
             >
               <ArrowLeft className="mr-2 h-4 w-4" /> Go back
             </Button>
