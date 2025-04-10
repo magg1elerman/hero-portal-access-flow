@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,10 +13,8 @@ import { ArrowLeft, HelpCircle, CreditCard, Mail } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { RateLimiter } from "@/utils/rateLimiter";
 
-// Create a rate limiter with 5 attempts in 5 minutes
 const rateLimiter = new RateLimiter(5, 5 * 60 * 1000);
 
-// Define the form schema
 const formSchema = z.object({
   accountNumber: z.string()
     .min(4, "Account number must be at least 4 characters")
@@ -33,11 +30,9 @@ const PayBill = ({ businessId }: { businessId: string }) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // Check if user is rate limited
   const limitStatus = rateLimiter.checkLocked();
   const [isLocked, setIsLocked] = useState(limitStatus.locked);
 
-  // Setup form with zod resolver
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,12 +42,10 @@ const PayBill = ({ businessId }: { businessId: string }) => {
     },
   });
 
-  // Demo credentials for testing
   const demoAccount = "10001";
   const demoInvoice = "INV10001";
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    // Record the attempt in rate limiter
     const attemptResult = rateLimiter.attempt();
     
     if (attemptResult.locked) {
@@ -67,7 +60,6 @@ const PayBill = ({ businessId }: { businessId: string }) => {
 
     setIsSubmitting(true);
 
-    // Show warning if user is approaching the rate limit
     if (attemptResult.attempts === 3) {
       toast({
         title: "Warning",
@@ -82,21 +74,17 @@ const PayBill = ({ businessId }: { businessId: string }) => {
       });
     }
 
-    // Simulate API validation (replace with actual API call)
     setTimeout(() => {
       setIsSubmitting(false);
 
-      // For demo purposes, check if using demo credentials
       if (data.accountNumber === demoAccount && data.invoiceNumber === demoInvoice) {
         toast({
           title: "Success",
           description: "Redirecting to payment screen",
         });
         
-        // Include email if provided
         const emailParam = data.email ? `&email=${encodeURIComponent(data.email)}` : '';
         
-        // Navigate to the payment portal
         navigate(`/portal?bid=${businessId}&temp=true&account=${data.accountNumber}${emailParam}`);
       } else {
         toast({
@@ -108,7 +96,6 @@ const PayBill = ({ businessId }: { businessId: string }) => {
     }, 1500);
   };
 
-  // For testing purposes - reset the rate limiter
   const resetLimiter = () => {
     rateLimiter.reset();
     setIsLocked(false);
@@ -231,7 +218,7 @@ const PayBill = ({ businessId }: { businessId: string }) => {
                         />
                       </FormControl>
                       <FormDescription>
-                        Your email is used to send payment confirmations and receipts
+                        Entering your email allows us to send payment confirmations and receipts
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -254,7 +241,6 @@ const PayBill = ({ businessId }: { businessId: string }) => {
               </div>
             )}
             
-            {/* For demo purposes only - reset button */}
             {isLocked && (
               <Button 
                 variant="outline" 
