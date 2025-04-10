@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import NewUser from "./pages/NewUser";
 import Portal from "./pages/Portal";
 import NotFound from "./pages/NotFound";
+import Welcome from "./pages/Welcome";
+import PayBill from "./pages/PayBill";
 
 const queryClient = new QueryClient();
 
@@ -25,9 +27,23 @@ const NewUserWrapper = () => {
   return <NewUser businessId={businessId} />;
 };
 
+// Wrapper component for Welcome to handle business ID retrieval
+const WelcomeWrapper = () => {
+  const [searchParams] = useSearchParams();
+  const businessId = searchParams.get("bid") || "sales-demo"; // Default to sales-demo if bid is not provided
+  return <Welcome businessId={businessId} />;
+};
+
+// Wrapper component for PayBill to handle business ID retrieval
+const PayBillWrapper = () => {
+  const [searchParams] = useSearchParams();
+  const businessId = searchParams.get("bid") || "sales-demo"; // Default to sales-demo if bid is not provided
+  return <PayBill businessId={businessId} />;
+};
+
 // Root redirect
 const Root = () => {
-  return <Navigate to="/login?bid=sales-demo" replace />;
+  return <Navigate to="/welcome?bid=sales-demo" replace />;
 };
 
 const App = () => (
@@ -38,8 +54,10 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Root />} />
+          <Route path="/welcome" element={<WelcomeWrapper />} />
           <Route path="/login" element={<LoginWrapper />} />
           <Route path="/newuser" element={<NewUserWrapper />} />
+          <Route path="/paybill" element={<PayBillWrapper />} />
           <Route path="/portal" element={<Portal />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

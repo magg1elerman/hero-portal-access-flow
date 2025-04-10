@@ -7,12 +7,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import HaulerHeroLogo from "@/components/HaulerHeroLogo";
+import { ArrowLeft, Mail } from "lucide-react";
 
 const Login = ({ businessId }: { businessId: string }) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,14 +28,21 @@ const Login = ({ businessId }: { businessId: string }) => {
       return;
     }
     
-    // Simulate successful login for demo purposes
-    toast({
-      title: "Login successful",
-      description: "Redirecting to portal...",
-    });
+    setIsLoading(true);
     
-    // Redirect to portal with business ID
-    navigate(`/portal?bid=${businessId}`);
+    // Simulate API request
+    setTimeout(() => {
+      setIsLoading(false);
+      
+      // Simulate successful login for demo purposes
+      toast({
+        title: "Login successful",
+        description: "Redirecting to portal...",
+      });
+      
+      // Redirect to portal with business ID
+      navigate(`/portal?bid=${businessId}`);
+    }, 1500);
   };
 
   return (
@@ -47,20 +56,24 @@ const Login = ({ businessId }: { businessId: string }) => {
 
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Login</CardTitle>
+            <CardTitle className="flex items-center">
+              <Mail className="mr-2 h-5 w-5" />
+              Sign In
+            </CardTitle>
             <CardDescription>Enter your credentials to access your account</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit}>
               <div className="grid gap-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="username">Username</Label>
+                  <Label htmlFor="username">Email</Label>
                   <Input
                     id="username"
-                    type="text"
+                    type="email"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="example@email.com"
+                    disabled={isLoading}
                   />
                 </div>
                 <div className="grid gap-2">
@@ -71,9 +84,12 @@ const Login = ({ businessId }: { businessId: string }) => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
+                    disabled={isLoading}
                   />
                 </div>
-                <Button type="submit" className="w-full">Login</Button>
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? "Signing in..." : "Sign In"}
+                </Button>
               </div>
             </form>
           </CardContent>
@@ -88,6 +104,16 @@ const Login = ({ businessId }: { businessId: string }) => {
                   Create Portal Account
                 </Link>
               </p>
+            </div>
+            <div className="w-full text-center mt-2">
+              <Button 
+                variant="link" 
+                onClick={() => navigate(`/welcome?bid=${businessId}`)}
+                className="text-hauler-secondary"
+              >
+                <ArrowLeft className="mr-1 h-4 w-4" />
+                Back to Welcome
+              </Button>
             </div>
           </CardFooter>
         </Card>
