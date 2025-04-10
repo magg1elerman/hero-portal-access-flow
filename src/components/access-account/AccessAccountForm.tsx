@@ -25,11 +25,7 @@ const formSchema = z.object({
   email: z.string().email("Invalid email address").optional().or(z.literal('')),
 });
 
-interface AccessAccountFormProps {
-  businessId: string;
-}
-
-const AccessAccountForm = ({ businessId }: AccessAccountFormProps) => {
+const AccessAccountForm = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -91,7 +87,7 @@ const AccessAccountForm = ({ businessId }: AccessAccountFormProps) => {
         
         const emailParam = data.email ? `&email=${encodeURIComponent(data.email)}` : '';
         
-        navigate(`/portal?bid=${businessId}&temp=true&account=${data.accountNumber}${emailParam}`);
+        navigate(`/portal?account=${data.accountNumber}${emailParam}`);
       } else {
         toast({
           title: "Invalid credentials",

@@ -85,7 +85,6 @@ const PICKUP_SCHEDULE = {
 
 const Portal = () => {
   const [searchParams] = useSearchParams();
-  const businessId = searchParams.get("bid") || "";
   const accountNumber = searchParams.get("account") || "";
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -105,7 +104,7 @@ const Portal = () => {
       });
       
       setTimeout(() => {
-        navigate(`/login?bid=${businessId}`);
+        navigate(`/login`);
       }, 2000);
     } else {
       toast({
@@ -113,7 +112,7 @@ const Portal = () => {
         description: `Welcome to your customer portal, ${customerData.name}`,
       });
     }
-  }, [customerData, businessId, navigate, toast]);
+  }, [customerData, navigate, toast]);
 
   if (!customerData) {
     return (
@@ -139,7 +138,7 @@ const Portal = () => {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <Button variant="outline" size="sm" onClick={() => navigate(`/login?bid=${businessId}`)}>
+            <Button variant="outline" size="sm" onClick={() => navigate(`/login`)}>
               Log Out
             </Button>
           </div>

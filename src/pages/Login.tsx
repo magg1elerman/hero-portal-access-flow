@@ -10,7 +10,7 @@ import SummitLogo from "@/components/SummitLogo";
 import { ArrowLeft, Mail } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
-const Login = ({ businessId }: { businessId: string }) => {
+const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [email, setEmail] = useState("");
@@ -36,7 +36,7 @@ const Login = ({ businessId }: { businessId: string }) => {
     // Short timeout for user experience, then redirect
     setTimeout(() => {
       setIsLoading(false);
-      navigate(`/portal?bid=${businessId}`);
+      navigate(`/portal`);
     }, 500);
   };
 
@@ -71,7 +71,6 @@ const Login = ({ businessId }: { businessId: string }) => {
         <div className="mb-8 text-center">
           <SummitLogo className="mx-auto mb-4 h-16" />
           <h2 className="text-2xl font-semibold text-hauler-dark">Customer Portal</h2>
-          <p className="text-hauler-secondary mt-2">Business ID: {businessId}</p>
         </div>
 
         <Card className="w-full">
@@ -180,7 +179,7 @@ const Login = ({ businessId }: { businessId: string }) => {
               <p className="text-sm text-muted-foreground">
                 Don't have an account?{" "}
                 <Link 
-                  to={`/register?bid=${businessId}`} 
+                  to={`/register`} 
                   className="text-hauler-primary hover:underline font-medium"
                 >
                   Create One Now
@@ -190,7 +189,7 @@ const Login = ({ businessId }: { businessId: string }) => {
             <div className="w-full text-center mt-2">
               <Button 
                 variant="link" 
-                onClick={() => navigate(`/welcome?bid=${businessId}`)}
+                onClick={() => navigate(`/welcome`)}
                 className="text-hauler-secondary"
               >
                 <ArrowLeft className="mr-1 h-4 w-4" />

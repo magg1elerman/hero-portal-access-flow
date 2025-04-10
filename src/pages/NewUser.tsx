@@ -1,11 +1,11 @@
+
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import HaulerHeroLogo from "@/components/HaulerHeroLogo";
 import SummitLogo from "@/components/SummitLogo";
 import { RateLimiter } from "@/utils/rateLimiter";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -50,18 +50,14 @@ const MicrosoftIcon = () => (
 );
 
 const VALID_ACCOUNTS = [
-  { accountNumber: "1001", invoiceNumber: "INV-10001", businessId: "sales-demo" },
-  { accountNumber: "1002", invoiceNumber: "INV-10002", businessId: "sales-demo" },
-  { accountNumber: "2001", invoiceNumber: "INV-20001", businessId: "other-business" },
+  { accountNumber: "1001", invoiceNumber: "INV-10001" },
+  { accountNumber: "1002", invoiceNumber: "INV-10002" },
+  { accountNumber: "2001", invoiceNumber: "INV-20001" },
 ];
 
 type Step = "account-verification" | "create-login";
 
-interface NewUserProps {
-  businessId: string;
-}
-
-const NewUser = ({ businessId }: NewUserProps) => {
+const NewUser = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const rateLimiter = new RateLimiter(5, 5 * 60 * 1000);
@@ -85,9 +81,8 @@ const NewUser = ({ businessId }: NewUserProps) => {
     setIsLocked(lockStatus.locked);
     setAttempts(lockStatus.attempts);
     
-    console.log("Current business ID:", businessId);
     console.log("Valid accounts:", VALID_ACCOUNTS);
-  }, [businessId]);
+  }, []);
 
   const handleReset = () => {
     rateLimiter.reset();
@@ -114,8 +109,7 @@ const NewUser = ({ businessId }: NewUserProps) => {
     const isValid = VALID_ACCOUNTS.some(
       account => 
         account.accountNumber === accountNumber && 
-        account.invoiceNumber === invoiceNumber && 
-        account.businessId === businessId
+        account.invoiceNumber === invoiceNumber
     );
     
     console.log("Validation result:", isValid);
@@ -177,7 +171,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
     console.log("Verification attempt:", {
       accountNumber,
       invoiceNumber,
-      businessId,
     });
 
     if (validateAccountDetails()) {
@@ -202,7 +195,7 @@ const NewUser = ({ businessId }: NewUserProps) => {
       });
       
       setTimeout(() => {
-        navigate(`/portal?bid=${businessId}&account=${accountNumber}`);
+        navigate(`/portal?account=${accountNumber}`);
       }, 2000);
     } else if (email || password) {
       toast({
@@ -233,7 +226,7 @@ const NewUser = ({ businessId }: NewUserProps) => {
       });
       
       setTimeout(() => {
-        navigate(`/portal?bid=${businessId}&account=${accountNumber}`);
+        navigate(`/portal?account=${accountNumber}`);
       }, 1500);
     }, 1500);
   };
@@ -409,7 +402,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
         <div className="mb-8 text-center">
           <SummitLogo className="mx-auto mb-4 w-64" />
           <h2 className="text-2xl font-semibold text-hauler-dark">Create Portal Account</h2>
-          <p className="text-hauler-secondary mt-2">Business ID: {businessId || "No business ID provided"}</p>
         </div>
 
         <Card className="w-full">
@@ -445,7 +437,7 @@ const NewUser = ({ businessId }: NewUserProps) => {
             <Button 
               variant="link" 
               className="w-full mt-2 text-gray-600 hover:text-gray-900" 
-              onClick={() => navigate(`/welcome?bid=${businessId}`)}
+              onClick={() => navigate(`/welcome`)}
             >
               <ArrowLeft className="mr-2 h-4 w-4" /> Go back
             </Button>

@@ -7,7 +7,7 @@ import SummitLogo from "@/components/SummitLogo";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { InfoIcon, UserPlus, Mail, KeyRound } from "lucide-react";
 
-const Welcome = ({ businessId }: { businessId: string }) => {
+const Welcome = () => {
   const navigate = useNavigate();
 
   return (
@@ -19,7 +19,7 @@ const Welcome = ({ businessId }: { businessId: string }) => {
             Customer Portal
           </h1>
           <p className="text-hauler-secondary mt-2 text-center">
-            Welcome to the Summit Waste Services customer portal for {businessId}
+            Welcome to the Summit Waste Services customer portal
           </p>
         </div>
 
@@ -31,7 +31,7 @@ const Welcome = ({ businessId }: { businessId: string }) => {
               </h2>
               
               <Button 
-                onClick={() => navigate(`/login?bid=${businessId}`)}
+                onClick={() => navigate(`/login`)}
                 className="h-12 flex items-center gap-2 bg-hauler-primary hover:bg-hauler-primary/90 text-white"
               >
                 <Mail className="h-5 w-5" />
@@ -40,7 +40,7 @@ const Welcome = ({ businessId }: { businessId: string }) => {
               </Button>
               
               <Button 
-                onClick={() => navigate(`/register?bid=${businessId}`)}
+                onClick={() => navigate(`/register`)}
                 variant="outline" 
                 className="h-12 flex items-center gap-2 border-hauler-primary text-hauler-primary hover:bg-hauler-primary/10"
               >
@@ -61,7 +61,7 @@ const Welcome = ({ businessId }: { businessId: string }) => {
               </Button>
               
               <Button 
-                onClick={() => navigate(`/access-account?bid=${businessId}`)}
+                onClick={() => navigate(`/access-account`)}
                 variant="secondary" 
                 className="h-12 flex items-center gap-2"
               >

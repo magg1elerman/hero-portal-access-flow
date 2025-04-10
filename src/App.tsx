@@ -13,37 +13,29 @@ import PayBill from "./pages/PayBill";
 
 const queryClient = new QueryClient();
 
-// Wrapper component to handle business ID retrieval from URL
+// Wrapper component to handle URL parameters
 const LoginWrapper = () => {
-  const [searchParams] = useSearchParams();
-  const businessId = searchParams.get("bid") || "sales-demo"; // Default to sales-demo if bid is not provided
-  return <Login businessId={businessId} />;
+  return <Login />;
 };
 
-// Wrapper component for NewUser to handle business ID retrieval
+// Wrapper component for NewUser
 const RegisterWrapper = () => {
-  const [searchParams] = useSearchParams();
-  const businessId = searchParams.get("bid") || "sales-demo"; // Default to sales-demo if bid is not provided
-  return <NewUser businessId={businessId} />;
+  return <NewUser />;
 };
 
-// Wrapper component for Welcome to handle business ID retrieval
+// Wrapper component for Welcome
 const WelcomeWrapper = () => {
-  const [searchParams] = useSearchParams();
-  const businessId = searchParams.get("bid") || "sales-demo"; // Default to sales-demo if bid is not provided
-  return <Welcome businessId={businessId} />;
+  return <Welcome />;
 };
 
-// Wrapper component for PayBill to handle business ID retrieval
+// Wrapper component for PayBill
 const AccessAccountWrapper = () => {
-  const [searchParams] = useSearchParams();
-  const businessId = searchParams.get("bid") || "sales-demo"; // Default to sales-demo if bid is not provided
-  return <PayBill businessId={businessId} />;
+  return <PayBill />;
 };
 
 // Root redirect
 const Root = () => {
-  return <Navigate to="/welcome?bid=sales-demo" replace />;
+  return <Navigate to="/welcome" replace />;
 };
 
 const App = () => (

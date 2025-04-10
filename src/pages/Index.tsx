@@ -6,8 +6,8 @@ const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Redirect to login page with default business ID
-    navigate("/login?bid=sales-demo");
+    // Redirect to login page
+    navigate("/login");
   }, [navigate]);
 
   return (
