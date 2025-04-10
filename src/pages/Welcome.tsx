@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import SummitLogo from "@/components/SummitLogo";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { InfoIcon, CreditCard, UserPlus, Mail } from "lucide-react";
+import { InfoIcon, UserPlus, Mail, KeyRound } from "lucide-react";
 
 const Welcome = ({ businessId }: { businessId: string }) => {
   const navigate = useNavigate();
@@ -65,7 +65,7 @@ const Welcome = ({ businessId }: { businessId: string }) => {
                 variant="secondary" 
                 className="h-12 flex items-center gap-2"
               >
-                <CreditCard className="h-5 w-5" />
+                <KeyRound className="h-5 w-5" />
                 One Time Access
                 <div className="flex-grow"></div>
                 <TooltipProvider>
