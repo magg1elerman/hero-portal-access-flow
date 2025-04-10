@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -7,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Mail } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import SummitLogo from "@/components/SummitLogo";
 
 const Login = ({ businessId }: { businessId: string }) => {
   const navigate = useNavigate();
@@ -65,11 +65,7 @@ const Login = ({ businessId }: { businessId: string }) => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-white">
       <Card className="w-full max-w-md shadow-sm border-gray-100">
         <CardHeader className="flex flex-col items-center space-y-2 pb-2">
-          <img 
-            src="/lovable-uploads/77f13a9b-63d0-4a67-9006-ca33d5680650.png" 
-            alt="EcoFleet Solutions Logo" 
-            className="h-16 mb-2" 
-          />
+          <SummitLogo className="h-16 mb-2" />
           <h2 className="text-xl font-medium text-gray-800">Sign in</h2>
         </CardHeader>
         
@@ -118,9 +114,9 @@ const Login = ({ businessId }: { businessId: string }) => {
             </div>
             
             <div className="relative flex items-center gap-2 py-2">
-              <Separator className="flex-grow" />
+              <Separator className="flex-1" />
               <span className="text-xs text-gray-500 px-2">Sign in with email</span>
-              <Separator className="flex-grow" />
+              <Separator className="flex-1" />
             </div>
             
             <Button 
