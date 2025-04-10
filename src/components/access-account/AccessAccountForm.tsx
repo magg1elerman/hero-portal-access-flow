@@ -22,7 +22,7 @@ const formSchema = z.object({
   invoiceNumber: z.string()
     .min(6, "Invoice number must be at least 6 characters")
     .max(15, "Invoice number must be at most 15 characters"),
-  email: z.string().email("Invalid email address").optional(),
+  email: z.string().email("Invalid email address").optional().or(z.literal('')),
 });
 
 interface AccessAccountFormProps {

@@ -39,7 +39,7 @@ const EmailField = ({ control, disabled }: EmailFieldProps) => {
             />
           </FormControl>
           <FormDescription>
-            Entering your email allows us to send payment confirmations and receipts
+            Optional: Enter your email to receive payment confirmations
           </FormDescription>
           <FormMessage />
         </FormItem>
