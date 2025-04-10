@@ -98,7 +98,7 @@ const Login = ({ businessId }: { businessId: string }) => {
               <p className="text-sm text-muted-foreground">
                 Don't have an account?{" "}
                 <Link 
-                  to={`/newuser?bid=${businessId}`} 
+                  to={`/register?bid=${businessId}`} 
                   className="text-hauler-primary hover:underline font-medium"
                 >
                   Create One Now
