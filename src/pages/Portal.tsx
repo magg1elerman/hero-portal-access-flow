@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import HaulerHeroLogo from "@/components/HaulerHeroLogo";
+import SummitLogo from "@/components/SummitLogo";
 import DashboardView from "@/components/portal/DashboardView";
 import BillingView from "@/components/portal/BillingView";
 import PickupScheduleView from "@/components/portal/PickupScheduleView";
@@ -132,7 +132,7 @@ const Portal = () => {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           <div className="flex items-center">
-            <HaulerHeroLogo className="h-10 mr-4" />
+            <SummitLogo className="h-10 mr-4" />
             <div className="ml-4">
               <h2 className="text-sm font-medium text-hauler-dark">Customer Portal</h2>
               <p className="text-xs text-hauler-secondary">{customerData.name}</p>
