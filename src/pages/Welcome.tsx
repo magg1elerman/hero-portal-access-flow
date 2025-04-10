@@ -66,7 +66,7 @@ const Welcome = ({ businessId }: { businessId: string }) => {
                 className="h-12 flex items-center gap-2"
               >
                 <CreditCard className="h-5 w-5" />
-                Pay Your Bill
+                One Time Access
                 <div className="flex-grow"></div>
                 <TooltipProvider>
                   <Tooltip>
