@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -19,7 +18,6 @@ import {
   DialogTitle,
   DialogFooter
 } from "@/components/ui/dialog";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 // Mock database of valid accounts for demo purposes
 const VALID_ACCOUNTS = [
@@ -31,9 +29,12 @@ const VALID_ACCOUNTS = [
 // Step type definition
 type Step = "account-details" | "verification" | "success";
 
-const NewUser = () => {
+interface NewUserProps {
+  businessId: string;
+}
+
+const NewUser = ({ businessId }: NewUserProps) => {
   const [searchParams] = useSearchParams();
-  const businessId = searchParams.get("bid") || "";
   const navigate = useNavigate();
   const { toast } = useToast();
   const rateLimiter = new RateLimiter(5, 5 * 60 * 1000); // 5 attempts in 5 minutes
@@ -234,7 +235,6 @@ const NewUser = () => {
     }
   };
 
-  // Render function for each step
   const renderStep = () => {
     switch (currentStep) {
       case "account-details":
@@ -467,4 +467,3 @@ const NewUser = () => {
 };
 
 export default NewUser;
-

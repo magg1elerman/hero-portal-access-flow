@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,30 +8,32 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import HaulerHeroLogo from "@/components/HaulerHeroLogo";
 
-interface LoginProps {
-  businessId: string;
-}
-
-const Login = ({ businessId }: LoginProps) => {
+const Login = ({ businessId }: { businessId: string }) => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
     if (!username || !password) {
       toast({
-        title: "Error",
-        description: "Please fill in all fields",
+        title: "Invalid login",
+        description: "Please enter both username and password",
         variant: "destructive",
       });
       return;
     }
-
+    
+    // Simulate successful login for demo purposes
     toast({
-      title: "Login attempted",
-      description: "This is a demo. Portal login functionality would happen here.",
+      title: "Login successful",
+      description: "Redirecting to portal...",
     });
+    
+    // Redirect to portal with business ID
+    navigate(`/portal?bid=${businessId}`);
   };
 
   return (
@@ -45,10 +47,8 @@ const Login = ({ businessId }: LoginProps) => {
 
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Sign In</CardTitle>
-            <CardDescription>
-              Enter your credentials to access your account
-            </CardDescription>
+            <CardTitle>Login</CardTitle>
+            <CardDescription>Enter your credentials to access your account</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit}>
@@ -60,7 +60,7 @@ const Login = ({ businessId }: LoginProps) => {
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Enter your username"
+                    placeholder="example@email.com"
                   />
                 </div>
                 <div className="grid gap-2">
@@ -70,22 +70,25 @@ const Login = ({ businessId }: LoginProps) => {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
+                    placeholder="••••••••"
                   />
                 </div>
-                <Button type="submit" className="w-full">Sign In</Button>
+                <Button type="submit" className="w-full">Login</Button>
               </div>
             </form>
           </CardContent>
-          <CardFooter className="flex flex-col items-center justify-center space-y-2">
-            <div className="text-sm text-muted-foreground">
-              Don't have an account?
+          <CardFooter className="flex flex-col">
+            <div className="w-full text-center mt-4">
+              <p className="text-sm text-muted-foreground">
+                Don't have an account?{" "}
+                <Link 
+                  to={`/newuser?bid=${businessId}`} 
+                  className="text-hauler-primary hover:underline font-medium"
+                >
+                  Create Portal Account
+                </Link>
+              </p>
             </div>
-            <Button variant="outline" className="w-full" asChild>
-              <Link to={`/newuser?bid=${businessId}`}>
-                Create Portal Account
-              </Link>
-            </Button>
           </CardFooter>
         </Card>
       </div>

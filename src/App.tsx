@@ -18,6 +18,13 @@ const LoginWrapper = () => {
   return <Login businessId={businessId} />;
 };
 
+// Wrapper component for NewUser to handle business ID retrieval
+const NewUserWrapper = () => {
+  const [searchParams] = useSearchParams();
+  const businessId = searchParams.get("bid") || "sales-demo"; // Default to sales-demo if bid is not provided
+  return <NewUser businessId={businessId} />;
+};
+
 // Root redirect
 const Root = () => {
   return <Navigate to="/login?bid=sales-demo" replace />;
@@ -32,7 +39,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Root />} />
           <Route path="/login" element={<LoginWrapper />} />
-          <Route path="/newuser" element={<NewUser />} />
+          <Route path="/newuser" element={<NewUserWrapper />} />
           <Route path="/portal" element={<Portal />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
