@@ -434,13 +434,6 @@ const NewUser = ({ businessId }: NewUserProps) => {
               </div>
             )}
             
-            <div className="w-full mt-2 bg-gray-100 p-3 rounded-md text-sm mb-3">
-              <p className="font-medium mb-1">Demo Accounts:</p>
-              <p>Business ID: sales-demo</p>
-              <p>Account: 1001, Invoice: INV-10001</p>
-              <p>Account: 1002, Invoice: INV-10002</p>
-            </div>
-            
             <Button 
               variant="outline" 
               className="w-full mt-2 mb-2 border-dashed border-hauler-warning text-hauler-warning hover:bg-hauler-warning/10" 
